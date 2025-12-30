@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-21RLNYBFN7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-21RLNYBFN7');
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CREILZOOHARDWARE | 3D Configurator</title>
@@ -96,7 +86,7 @@
         <div class="glass h-[600px] rounded-[40px] flex flex-col overflow-hidden border-white/5">
             <div class="p-6 bg-white/5 flex items-center gap-3">
                 <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
-                <span class="text-[10px] font-black uppercase tracking-widest">Assistant Gemini v2.5</span>
+                <span class="text-[10px] font-black uppercase tracking-widest">Assistant Intelligent v1.0</span>
             </div>
             
             <div id="chat-box" class="flex-1 p-6 space-y-4 overflow-y-auto text-sm">
@@ -118,7 +108,7 @@
 </main>
 
 <script>
-    // --- LOGIQUE 3D ---
+    // --- LOGIQUE 3D (Standard) ---
     let scene, camera, renderer, currentPC;
     let pointLight, ambientLight;
 
@@ -129,14 +119,11 @@
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         container.appendChild(renderer.domElement);
-
         ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
-
         pointLight = new THREE.PointLight(0x22d3ee, 2, 10);
         pointLight.position.set(2, 2, 2);
         scene.add(pointLight);
-
         loadModel('gaming');
         camera.position.z = 6;
         animate();
@@ -181,48 +168,146 @@
         renderer.render(scene, camera);
     }
 
-    // --- IA via backend Node.js ---
+    // --- MEGA BASE DE DONNÉES IA ---
+    
+    const responses = {
+        salutations: {
+            keywords: ["bonjour", "salut", "hello", "coucou", "wesh", "yo", "hey"],
+            lines: [
+                "Bonjour ! Je suis l'expert CREILZOO. Prêt à bâtir une légende ?",
+                "Salut ! On configure quoi aujourd'hui ? Un monstre de puissance ou un PC discret ?",
+                "Hello ! Quel plaisir de vous voir sur le configurateur."
+            ]
+        },
+        gaming_ultra: {
+            keywords: ["gaming", "jeu", "gamer", "fortnite", "warzone", "cyberpunk", "fps", "4k", "performance"],
+            lines: [
+                "Pour le Gaming Ultra, je vous suggère une **RTX 4090**. C'est le seul moyen de dominer Cyberpunk en 4K.",
+                "Pour les jeux compétitifs (Valorant/CS2), visez un écran 360Hz et un processeur **Ryzen 7 7800X3D**, le roi actuel du jeu.",
+                "Dans ce boîtier, on peut mettre un GPU de 400mm sans problème. Idéal pour le gaming lourd.",
+                "N'oubliez pas le Ray Tracing ! Avec une config haut de gamme, l'immersion est totale."
+            ]
+        },
+        travail_pro: {
+            keywords: ["travail", "montage", "3d", "blender", "adobe", "video", "rendu", "architecture", "pro"],
+            lines: [
+                "Pour le rendu 3D, le nombre de cœurs est vital. Un **Intel i9-14900K** ou un **Threadripper** serait parfait.",
+                "Si vous faites du montage vidéo 8K, il vous faut au moins 64 Go de RAM DDR5.",
+                "La stabilité est la priorité. Je recommande une alimentation certifiée **80+ Platinum** pour les stations de travail.",
+                "Pour Blender, privilégiez Nvidia pour profiter des cœurs CUDA qui accélèrent drastiquement les rendus."
+            ]
+        },
+        streaming: {
+            keywords: ["stream", "twitch", "youtube", "diffuser", "obs", "live"],
+            lines: [
+                "Pour streamer sans perte de FPS, l'encodeur **NVENC** des cartes Nvidia est indispensable.",
+                "Un processeur avec au moins 10 cœurs permettra de gérer OBS, votre jeu et votre chat en simultané.",
+                "Pensez à une carte de capture dédiée si vous voulez streamer du contenu console via votre PC."
+            ]
+        },
+        refroidissement: {
+            keywords: ["chauffe", "température", "chaud", "bruit", "ventilo", "watercooling", "aio", "silence"],
+            lines: [
+                "Pour ce boîtier, un **Watercooling (AIO) de 360mm** en haut serait optimal.",
+                "Si vous cherchez le silence absolu, les ventilateurs **Noctua** ou **be quiet!** sont les meilleures options.",
+                "L'airflow est crucial. Je conseille 3 ventilateurs en façade pour aspirer l'air frais."
+            ]
+        },
+        budget_eco: {
+            keywords: ["prix", "argent", "budget", "cher", "euros", "€", "eco", "moins cher", "promotion"],
+            lines: [
+                "On peut baisser la facture en restant sur du **AM4 (DDR4)**. C'est encore très performant pour le prix.",
+                "Pour un PC budget, la **RX 6750 XT** d'AMD offre un rapport perf/prix imbattable.",
+                "Dites-moi votre budget maximum (ex: 1000€) et je vous ferai la meilleure liste possible.",
+                "L'occasion peut être une option pour le boîtier, mais achetez toujours l'alimentation NEUVE !"
+            ]
+        },
+        stockage: {
+            keywords: ["stockage", "disque", "ssd", "go", "to", "place", "mémoire"],
+            lines: [
+                "Aujourd'hui, le standard c'est le **SSD NVMe Gen4**. C'est 10x plus rapide qu'un SSD classique.",
+                "Pour une grosse bibliothèque de jeux, un disque de 2 To est devenu le minimum confortable.",
+                "Si vous faites du montage, séparez votre système (SSD 500Go) de vos fichiers de travail (SSD 2To)."
+            ]
+        },
+        easter_eggs: {
+            keywords: ["nu", "beurre", "manger", "tue", "amour", "nul", "stupide", "humain"],
+            lines: [
+                "Je suis une IA, je ne mange pas, mais j'adore dévorer les données de benchmark !",
+                "L'erreur est humaine... mais pour vraiment tout casser, il faut un ordinateur.",
+                "Je ne suis pas nul, je suis juste configuré en mode économie d'énergie là."
+            ]
+        }
+    };
+
+    const fallback = `
+        <div class="space-y-2">
+            <p>Désolé, mes bases de données sont limitées. Essayez de me parler de :</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="bg-cyan-400/20 text-cyan-400 px-2 py-1 rounded text-[10px]">GAMING</span>
+                <span class="bg-violet-400/20 text-violet-400 px-2 py-1 rounded text-[10px]">TRAVAIL PRO</span>
+                <span class="bg-emerald-400/20 text-emerald-400 px-2 py-1 rounded text-[10px]">BUDGET</span>
+                <span class="bg-orange-400/20 text-orange-400 px-2 py-1 rounded text-[10px]">STREAMING</span>
+                <span class="bg-blue-400/20 text-blue-400 px-2 py-1 rounded text-[10px]">SILENCE</span>
+            </div>
+        </div>
+    `;
+
     async function handleAI() {
         const input = document.getElementById('ai-input');
-        const msg = input.value.trim();
-        if(!msg) return;
+        const userMsg = input.value.trim();
+        const lowMsg = userMsg.toLowerCase();
+        
+        if(!userMsg) return;
 
+        // Affichage message utilisateur
         const box = document.getElementById('chat-box');
-        box.innerHTML += `<div class="bg-cyan-400 text-slate-950 p-3 rounded-2xl rounded-tr-none ml-8 text-xs font-bold">${msg}</div>`;
+        box.innerHTML += `<div class="flex justify-end mb-4"><div class="bg-cyan-400 text-slate-950 p-3 rounded-2xl rounded-tr-none text-xs font-bold max-w-[80%]">${userMsg}</div></div>`;
         input.value = "";
-
-        addBotMsg("🤖 L'IA réfléchit...");
-
-        try {
-            const res = await fetch("http://localhost:3000/chat", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ message: msg })
-            });
-            const data = await res.json();
-            addBotMsg(data.reply || "❌ Pas de réponse");
-        } catch(e) {
-            addBotMsg("❌ Impossible de joindre l'IA");
-            console.error(e);
-        }
-
         box.scrollTop = box.scrollHeight;
+
+        // Loader
+        const loadingId = "load-" + Date.now();
+        box.innerHTML += `<div id="${loadingId}" class="flex justify-start mb-4"><div class="bg-slate-800 p-3 rounded-2xl rounded-tl-none text-xs text-slate-400 italic">CREILZOO réfléchit...</div></div>`;
+        box.scrollTop = box.scrollHeight;
+
+        setTimeout(() => {
+            document.getElementById(loadingId).remove();
+            let finalResponse = "";
+
+            // Parcours de toutes les catégories pour trouver un mot-clé
+            for (const category in responses) {
+                if (responses[category].keywords.some(key => lowMsg.includes(key))) {
+                    finalResponse = responses[category].lines[Math.floor(Math.random() * responses[category].lines.length)];
+                    
+                    // Optionnel : Changement automatique de modèle 3D selon le sujet
+                    if(category === 'gaming_ultra') loadModel('gaming');
+                    if(category === 'travail_pro') loadModel('workstation');
+                    if(category === 'budget_eco') loadModel('minimal');
+                    
+                    break;
+                }
+            }
+
+            if (!finalResponse) finalResponse = fallback;
+            addBotMsg(finalResponse);
+        }, 700);
     }
 
     function addBotMsg(text) {
         const box = document.getElementById('chat-box');
-        box.innerHTML += `<div class="bg-white/5 border border-white/5 p-3 rounded-2xl rounded-tl-none mr-8 text-xs text-slate-300">${text}</div>`;
+        box.innerHTML += `
+            <div class="flex justify-start mb-4">
+                <div class="bg-white/5 border border-white/5 p-4 rounded-2xl rounded-tl-none text-xs text-slate-300 max-w-[85%] leading-relaxed">
+                    <span class="block font-black text-cyan-400 text-[10px] mb-1 uppercase tracking-wider">CREILZOO IA</span>
+                    ${text}
+                </div>
+            </div>`;
         box.scrollTop = box.scrollHeight;
     }
 
+    document.getElementById('ai-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') handleAI(); });
     window.onload = init3D;
-    window.addEventListener('resize', () => {
-        const container = document.getElementById('canvas-container');
-        camera.aspect = container.clientWidth / container.clientHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.clientWidth, container.clientHeight);
-    });
 </script>
 </body>
 </html>
-
