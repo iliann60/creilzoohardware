@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREILZOOHARDWARE | Expert Hardware Premium</title>
+    <link rel="icon" type="image/png" href="extras/favicon.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 950: '#020617' },
+                        cyan: { 400: '#22d3ee' },
+                        violet: { 600: '#7c3aed' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* BONUS 1: Barre de progression de lecture */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 3px;
+            background: linear-gradient(to right, #22d3ee, #7c3aed);
+            z-index: 101; width: 0%; transition: width 0.1s;
+        }
+
+        /* BONUS 2: Effet de halo qui suit la souris */
+        #cursor-glow {
+            position: fixed; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%; pointer-events: none; z-index: 0;
+            transform: translate(-50%, -50%);
+        }
+
+        .glass-nav { background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .float { animation: floating 3s ease-in-out infinite; }
+        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 selection:bg-cyan-500/30">
+
+    <div id="scroll-progress"></div>
+    
+    <div id="cursor-glow" class="hidden md:block"></div>
+
+    <nav class="fixed w-full z-[100] py-4 glass-nav">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <i class="ph-fill ph-cpu text-cyan-400 text-3xl animate-pulse"></i>
+                <span>CREILZOO<span class="text-cyan-400">HARDWARE</span></span>
+            </div>
+            
+            <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-[10px] font-black text-emerald-500 uppercase tracking-tighter">Atelier Ouvert</span>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-300 items-center">
+                <a href="#services" class="hover:text-cyan-400 transition-all">Services</a>
+                <a href="#configurateur" class="hover:text-cyan-400 transition-all">Configurateur LAB</a>
+                <a href="configurateur.html" class="hover:text-cyan-400 transition-all">Configurateur 3D</a>
+                <a href="#team" class="hover:text-cyan-400 transition-all">L'Équipe</a>
+                <a href="#contact" class="px-5 py-2 bg-cyan-500 text-slate-950 rounded-full font-bold hover:bg-white hover:scale-110 transition-all">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587202377405-83616591040c?q=80&w=2070')] bg-cover bg-center opacity-5"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div data-aos="zoom-out" data-aos-duration="1000">
+                <h1 class="text-6xl md:text-8xl font-extrabold mb-6 tracking-tight">
+                    L'Élite <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Hardware</span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                    Propulsé par <span class="text-white font-bold">CREILZOOHARDWARE</span>. <br>L'ingénierie PC au service de la performance absolue.
+                </p>
+                <div class="flex flex-col md:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
+                    <a href="#configurateur" class="px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-2xl hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:-translate-y-2 transition-all">LANCER LE CONFIGURATEUR</a>
+                    <a href="configurateur.html" class="px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black rounded-2xl hover:shadow-[0_0_30px_rgba(34,211,238,0.4)] hover:-translate-y-2 transition-all">LANCER LE CONFIGURATEUR 3D (NEW)</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-32 bg-slate-950">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-black mb-20 uppercase tracking-widest" data-aos="fade-up">Nos Expertises</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="p-10 rounded-3xl bg-slate-900/50 border border-slate-800" data-aos="fade-right"><i class="ph ph-wrench text-cyan-400 text-5xl mb-6"></i><h3 class="font-bold text-2xl mb-4">Réparation</h3><p class="text-slate-400">Diagnostic chirurgical et remise à neuf de vos composants.</p></div>
+                <div class="p-10 rounded-3xl bg-slate-900/50 border border-slate-800" data-aos="fade-up"><i class="ph ph-desktop-tower text-cyan-400 text-5xl mb-6"></i><h3 class="font-bold text-2xl mb-4">Montage PC</h3><p class="text-slate-400">Ingénierie de pointe et câble management invisible.</p></div>
+                <div class="p-10 rounded-3xl bg-slate-900/50 border border-slate-800" data-aos="fade-left"><i class="ph ph-lightning text-cyan-400 text-5xl mb-6"></i><h3 class="font-bold text-2xl mb-4">Optimisation</h3><p class="text-slate-400">Libérez chaque FPS. Overclocking stable et tuning système.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="configurateur" class="py-32 bg-slate-900/30 overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="text-4xl font-black text-center mb-16" data-aos="zoom-in">CONFIGURATEUR LAB</h2>
+            <div class="bg-slate-950/80 backdrop-blur-xl rounded-[40px] border border-slate-800 p-8 md:p-12 grid lg:grid-cols-2 gap-16" data-aos="fade-up">
+                <div>
+                    <h3 class="text-xl font-black mb-8 text-cyan-400 flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center text-sm font-bold">01</span> USAGE</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-12">
+                        <button onclick="selectUsage('Gaming', 1500, '4K et Ray Tracing ultra-fluide.', this)" class="usage-btn p-4 rounded-2xl border border-slate-800 text-slate-400 font-bold hover:border-cyan-400 transition-all">Gaming</button>
+                        <button onclick="selectUsage('Bureautique', 750, 'Silence absolu et réactivité.', this)" class="usage-btn p-4 rounded-2xl border border-slate-800 text-slate-400 font-bold hover:border-cyan-400 transition-all">Bureautique</button>
+                        <button onclick="selectUsage('Streaming', 1900, 'Jouez et diffusez sans perte.', this)" class="usage-btn p-4 rounded-2xl border border-slate-800 text-slate-400 font-bold hover:border-cyan-400 transition-all">Streaming</button>
+                        <button onclick="selectUsage('IA & Dev', 3200, 'Calcul parallèle et deep learning.', this)" class="usage-btn p-4 rounded-2xl border border-slate-800 text-slate-400 font-bold hover:border-cyan-400 transition-all">IA & Dev</button>
+                        <button onclick="selectUsage('Personnalisé', 0, 'Saisissez vos composants ci-dessous pour un devis précis.', this)" class="usage-btn p-4 rounded-2xl border border-slate-800 text-cyan-400 font-black bg-cyan-400/5 sm:col-span-2 hover:border-cyan-400 transition-all">SUR MESURE / PERSONNALISÉ</button>
+                    </div>
+
+                    <h3 class="text-xl font-black mb-8 text-cyan-400 flex items-center gap-3"><span class="w-8 h-8 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center text-sm font-bold">02</span> OPTIONS</h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center gap-4 p-5 rounded-2xl bg-slate-900/50 border border-slate-800 cursor-pointer"><input type="checkbox" id="opt-rgb" onchange="updatePrice()" class="w-6 h-6 accent-cyan-400"><span class="font-bold">Pack Full RGB (+150€)</span></label>
+                        <label class="flex items-center gap-4 p-5 rounded-2xl bg-slate-900/50 border border-slate-800 cursor-pointer"><input type="checkbox" id="opt-gravure" onchange="updatePrice()" class="w-6 h-6 accent-cyan-400"><span class="font-bold">Gravure Laser Signature (+100€)</span></label>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-slate-900 to-black p-10 rounded-[32px] border border-slate-800 flex flex-col justify-between shadow-2xl">
+                    <div>
+                        <h4 class="text-3xl font-black mb-6 italic tracking-tighter">VOTRE SETUP</h4>
+                        <div id="summary-empty" class="text-slate-600 italic">En attente de sélection...</div>
+                        <div id="summary-content" class="hidden space-y-6">
+                            <div class="bg-cyan-400/10 p-4 rounded-xl border-l-4 border-cyan-400">
+                                <p class="text-cyan-400 font-black text-xl uppercase" id="res-usage"></p>
+                                <p class="text-slate-300 text-sm mt-1" id="res-desc"></p>
+                            </div>
+                            <div id="custom-input-area" class="hidden">
+                                <textarea id="custom-components" placeholder="Détaillez vos composants ici..." class="w-full bg-slate-950 border border-slate-800 p-4 rounded-xl text-sm focus:border-cyan-400 outline-none h-32"></textarea>
+                            </div>
+                            <ul class="space-y-3 text-slate-400 font-medium text-sm" id="res-list"></ul>
+                        </div>
+                    </div>
+                    <div class="mt-12 pt-8 border-t border-slate-800">
+                        <div class="flex justify-between items-center mb-6"><span class="text-slate-500 uppercase font-black text-xs">Estimation</span><span id="total-price" class="text-5xl font-black text-white">0 €</span></div>
+                        <button onclick="envoyerDevis()" class="w-full py-5 bg-white text-slate-950 font-black rounded-2xl hover:bg-cyan-400 hover:scale-[1.03] transition-all uppercase">Demander le devis</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="py-32 bg-slate-950">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-black mb-20 uppercase tracking-widest" data-aos="fade-up">Team CREILZOOHARDWARE</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+<script>
+    const team = [
+        {
+            n: "DUONG Ilian", 
+            r: "Chef de Projet / DevOps", 
+            img: "extras/ilian.jpg" // <--- Chemin vers ta photo
+        },
+        {
+            n: "AMMI Tayeb", 
+            r: "Support & Doc", 
+            img: "images/tayeb.jpg"
+        },
+        {
+            n: "ELQMACHE Ouissame", 
+            r: "Marketing & Dev", 
+            img: "extras/ouiss.jpg"
+        },
+        {
+            n: "BEN FARHAT Mohamed", 
+            r: "Digital & Dev", 
+            img: "extras/moha.jpg"
+        },
+        {
+            n: "LANAYA Mehdi", 
+            r: "Infra & Ops", 
+            img: "images/mehdi.jpg"
+        }
+    ];
+
+    team.forEach((m, i) => {
+        document.write(`
+            <div class="bg-slate-900/50 p-8 rounded-[30px] border border-slate-800 w-64 hover:border-cyan-400/50 transition-all group" data-aos="zoom-in" data-aos-delay="${i*100}">
+                <div class="relative w-24 h-24 mx-auto mb-4">
+                    <img src="${m.img}" 
+                         class="w-full h-full object-cover bg-slate-800 rounded-3xl border-2 border-slate-700 group-hover:border-cyan-400 transition-colors" 
+                         onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${m.n}'">
+                </div>
+                <h3 class="font-black text-lg mb-1">${m.n}</h3>
+                <p class="text-cyan-400 text-[10px] font-black uppercase tracking-widest">${m.r}</p>
+            </div>
+        `);
+    });
+</script>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-32 bg-slate-950">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-slate-900 p-12 rounded-[40px] border border-slate-800" data-aos="fade-up">
+                <h2 class="text-4xl font-black mb-12 text-center uppercase tracking-widest">Nous Écrire</h2>
+                <form action="https://formspree.io/f/contactdhardware@gmail.com" method="POST" class="grid md:grid-cols-2 gap-6">
+                    <input type="text" name="nom" placeholder="VOTRE NOM" required class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
+                    <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
+                    <textarea name="message" rows="4" placeholder="VOTRE PROJET..." required class="md:col-span-2 w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400"></textarea>
+                    <button type="submit" class="md:col-span-2 py-5 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black rounded-2xl uppercase tracking-widest transition-all hover:scale-105 shadow-lg shadow-cyan-500/20">Envoyer au Support</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 border-t border-slate-900 text-center font-black uppercase tracking-widest text-slate-600 text-sm">
+        <p>&copy; 2026 CREILZOOHARDWARE - Expertise Technologique</p>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        // LOGIQUE BONUS: Scroll & Cursor Glow
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-progress").style.width = scrolled + "%";
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            const glow = document.getElementById('cursor-glow');
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+
+        // CONFIGURATEUR
+        let basePrice = 0; let currentUsage = ""; let currentDesc = "";
+        function selectUsage(name, price, desc, el) {
+            basePrice = price; currentUsage = name; currentDesc = desc;
+            document.querySelectorAll('.usage-btn').forEach(b => {
+                b.classList.remove('border-cyan-400', 'bg-cyan-400/10', 'text-cyan-400');
+                b.classList.add('border-slate-800', 'text-slate-400');
+            });
+            el.classList.remove('border-slate-800', 'text-slate-400');
+            el.classList.add('border-cyan-400', 'bg-cyan-400/10', 'text-cyan-400');
+            document.getElementById('summary-empty').classList.add('hidden');
+            document.getElementById('summary-content').classList.remove('hidden');
+            
+            const customArea = document.getElementById('custom-input-area');
+            if(name === 'Personnalisé') {
+                customArea.classList.remove('hidden');
+            } else {
+                customArea.classList.add('hidden');
+            }
+            updatePrice();
+        }
+
+        function updatePrice() {
+            if(!currentUsage) return;
+            let total = basePrice;
+            const rgb = document.getElementById('opt-rgb').checked;
+            const grav = document.getElementById('opt-gravure').checked;
+            if(rgb) total += 150; if(grav) total += 100;
+
+            document.getElementById('res-usage').innerText = currentUsage;
+            document.getElementById('res-desc').innerText = currentDesc;
+            
+            if(currentUsage === 'Personnalisé') {
+                document.getElementById('total-price').innerText = "À Déterminer";
+            } else {
+                document.getElementById('total-price').innerText = total + " €";
+            }
+            
+            let list = "<li><i class='ph ph-check-circle text-cyan-400'></i> Composants Certifiés</li>";
+            if(rgb) list += "<li class='text-cyan-400'>• Option RGB Incluse</li>";
+            if(grav) list += "<li class='text-cyan-400'>• Option Gravure Signature</li>";
+            document.getElementById('res-list').innerHTML = list;
+        }
+
+        function envoyerDevis() {
+            if(!currentUsage) { alert("Veuillez sélectionner une configuration !"); return; }
+            const total = document.getElementById('total-price').innerText;
+            const customParts = document.getElementById('custom-components').value;
+            const sujet = encodeURIComponent("[DEVIS] Configuration PC - " + currentUsage);
+            let corps = `Bonjour CREILZOOHARDWARE,\n\nSouhait de configuration :\n- Usage : ${currentUsage}\n`;
+            if(currentUsage === 'Personnalisé') corps += `- Liste : ${customParts}\n`;
+            corps += `- Options : ${document.getElementById('opt-rgb').checked ? 'RGB ' : ''}${document.getElementById('opt-gravure').checked ? 'Gravure' : ''}\n`;
+            corps += `- Estimation : ${total}\n\nMerci.`;
+            window.location.href = `mailto:contactdhardware@gmail.com?subject=${sujet}&body=${encodeURIComponent(corps)}`;
+        }
+    </script>
+</body>
+</html>

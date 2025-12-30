@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREILZOOHARDWARE | 3D Configurator</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { slate: { 950: '#020617' }, cyan: { 400: '#22d3ee' } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: white; overflow-x: hidden; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        #canvas-container { width: 100%; height: 500px; cursor: grab; }
+        #canvas-container:active { cursor: grabbing; }
+    </style>
+</head>
+<body>
+
+<nav class="fixed w-full z-[100] py-6 px-10 flex justify-between items-center pointer-events-none">
+    <div class="text-2xl font-black tracking-tighter pointer-events-auto">
+        <a href="index.html" class="hover:opacity-80 transition-opacity">
+            CREILZOO<span class="text-cyan-400">HARDWARE</span>
+        </a>
+    </div>
+    <div class="glass px-6 py-2 rounded-full text-[10px] font-black tracking-[0.2em] uppercase pointer-events-auto">
+        Moteur de rendu 3D actif
+    </div>
+</nav>
+
+<main class="grid lg:grid-cols-12 min-h-screen">
+    
+    <div class="lg:col-span-3 p-10 pt-32 space-y-6 z-10 bg-gradient-to-r from-slate-950 to-transparent">
+        <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-10">Sélectionner un Châssis</h2>
+        
+        <button onclick="loadModel('gaming')" class="w-full p-6 glass rounded-3xl text-left hover:border-cyan-400 transition-all group">
+            <i class="ph ph-shield-checkered text-2xl text-cyan-400 mb-2"></i>
+            <h4 class="font-black uppercase tracking-tighter">Full Tower Gaming</h4>
+            <p class="text-[10px] text-slate-400 mt-1">E-ATX • Airflow Max • RGB Sync</p>
+        </button>
+
+        <button onclick="loadModel('workstation')" class="w-full p-6 glass rounded-3xl text-left hover:border-violet-400 transition-all">
+            <i class="ph ph-cube text-2xl text-violet-400 mb-2"></i>
+            <h4 class="font-black uppercase tracking-tighter">Workstation Pro</h4>
+            <p class="text-[10px] text-slate-400 mt-1">Dual GPU Ready • Insonorisé</p>
+        </button>
+
+        <button onclick="loadModel('minimal')" class="w-full p-6 glass rounded-3xl text-left hover:border-emerald-400 transition-all">
+            <i class="ph ph-bounding-box text-2xl text-emerald-400 mb-2"></i>
+            <h4 class="font-black uppercase tracking-tighter">Small Form Factor</h4>
+            <p class="text-[10px] text-slate-400 mt-1">ITX • Ultra Compact • Discret</p>
+        </button>
+    </div>
+
+    <div class="lg:col-span-6 relative flex items-center justify-center">
+        <div id="canvas-container"></div>
+        
+        <div class="absolute bottom-10 glass p-6 rounded-3xl flex gap-10 text-center">
+            <div>
+                <span class="block text-[10px] font-bold text-slate-500 uppercase italic">Rotation</span>
+                <span class="text-sm font-black">360° AUTO</span>
+            </div>
+            <div class="w-[1px] bg-white/10"></div>
+            <div>
+                <span class="block text-[10px] font-bold text-slate-500 uppercase italic">Rendu</span>
+                <span class="text-sm font-black text-cyan-400">REAL-TIME</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="lg:col-span-3 p-10 pt-32 z-10 bg-gradient-to-l from-slate-950 to-transparent">
+        <div class="glass h-[600px] rounded-[40px] flex flex-col overflow-hidden border-white/5">
+            <div class="p-6 bg-white/5 flex items-center gap-3">
+                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span class="text-[10px] font-black uppercase tracking-widest">Assistant Gemini v2.5</span>
+            </div>
+            
+            <div id="chat-box" class="flex-1 p-6 space-y-4 overflow-y-auto text-sm">
+                <div class="bg-slate-800/40 p-4 rounded-2xl rounded-tl-none border border-white/5">
+                    Bonjour. J'ai chargé le moteur 3D. Quel type de composants souhaitez-vous simuler dans ce boîtier ?
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-900/50">
+                <div class="relative">
+                    <input type="text" id="ai-input" placeholder="Parler à l'IA..." class="w-full bg-slate-950 border border-white/10 rounded-2xl p-4 text-xs outline-none focus:border-cyan-400 transition-all">
+                    <button onclick="handleAI()" class="absolute right-2 top-2 bg-cyan-400 text-slate-950 p-2 rounded-xl">
+                        <i class="ph-bold ph-paper-plane-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    // --- LOGIQUE 3D ---
+    let scene, camera, renderer, currentPC;
+    let pointLight, ambientLight;
+
+    function init3D() {
+        const container = document.getElementById('canvas-container');
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        pointLight = new THREE.PointLight(0x22d3ee, 2, 10);
+        pointLight.position.set(2, 2, 2);
+        scene.add(pointLight);
+
+        loadModel('gaming');
+        camera.position.z = 6;
+        animate();
+    }
+
+    function createPC(width, height, depth, color, glowColor) {
+        if (currentPC) scene.remove(currentPC);
+        const group = new THREE.Group();
+        const mainGeo = new THREE.BoxGeometry(width, height, depth);
+        const mainMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, transparent: true, opacity: 0.6, shininess: 100 });
+        const chassis = new THREE.Mesh(mainGeo, mainMat);
+        group.add(chassis);
+        const wireframe = new THREE.EdgesGeometry(mainGeo);
+        const lineMat = new THREE.LineBasicMaterial({ color: color, linewidth: 2 });
+        const edges = new THREE.LineSegments(wireframe, lineMat);
+        group.add(edges);
+        const compGeo = new THREE.BoxGeometry(width * 0.8, 0.3, depth * 0.7);
+        const compMat = new THREE.MeshPhongMaterial({ color: 0x1e293b });
+        const gpu = new THREE.Mesh(compGeo, compMat);
+        gpu.position.y = -0.2;
+        group.add(gpu);
+        const internalLight = new THREE.PointLight(glowColor, 3, 3);
+        internalLight.position.set(0, 0, 0);
+        group.add(internalLight);
+        currentPC = group;
+        scene.add(currentPC);
+        pointLight.color.setHex(glowColor);
+    }
+
+    function loadModel(type) {
+        if(type === 'gaming') createPC(2, 2.5, 1.2, 0x22d3ee, 0x00ffff);
+        else if(type === 'workstation') createPC(2.2, 2.8, 1.5, 0x7c3aed, 0x7c3aed);
+        else if(type === 'minimal') createPC(1.2, 1.5, 1.2, 0x10b981, 0x10b981);
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        if(currentPC) {
+            currentPC.rotation.y += 0.005;
+            currentPC.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+        }
+        renderer.render(scene, camera);
+    }
+
+    // --- IA via backend Node.js ---
+    async function handleAI() {
+        const input = document.getElementById('ai-input');
+        const msg = input.value.trim();
+        if(!msg) return;
+
+        const box = document.getElementById('chat-box');
+        box.innerHTML += `<div class="bg-cyan-400 text-slate-950 p-3 rounded-2xl rounded-tr-none ml-8 text-xs font-bold">${msg}</div>`;
+        input.value = "";
+
+        addBotMsg("🤖 L'IA réfléchit...");
+
+        try {
+            const res = await fetch("http://localhost:3000/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: msg })
+            });
+            const data = await res.json();
+            addBotMsg(data.reply || "❌ Pas de réponse");
+        } catch(e) {
+            addBotMsg("❌ Impossible de joindre l'IA");
+            console.error(e);
+        }
+
+        box.scrollTop = box.scrollHeight;
+    }
+
+    function addBotMsg(text) {
+        const box = document.getElementById('chat-box');
+        box.innerHTML += `<div class="bg-white/5 border border-white/5 p-3 rounded-2xl rounded-tl-none mr-8 text-xs text-slate-300">${text}</div>`;
+        box.scrollTop = box.scrollHeight;
+    }
+
+    window.onload = init3D;
+    window.addEventListener('resize', () => {
+        const container = document.getElementById('canvas-container');
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+</script>
+</body>
+</html>
