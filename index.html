@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr" class="scroll-smooth">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-21RLNYBFN7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-21RLNYBFN7');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-21RLNYBFN7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-21RLNYBFN7');
+    </script>
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,14 +38,12 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
         
-        /* BONUS 1: Barre de progression de lecture */
         #scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px;
             background: linear-gradient(to right, #22d3ee, #7c3aed);
             z-index: 101; width: 0%; transition: width 0.1s;
         }
 
-        /* BONUS 2: Effet de halo qui suit la souris */
         #cursor-glow {
             position: fixed; width: 400px; height: 400px;
             background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, rgba(0,0,0,0) 70%);
@@ -63,39 +59,38 @@
 <body class="bg-slate-950 text-slate-100 selection:bg-cyan-500/30">
 
     <div id="scroll-progress"></div>
-    
     <div id="cursor-glow" class="hidden md:block"></div>
 
-<nav class="fixed w-full z-[100] py-4 glass-nav">
-    <div class="container mx-auto px-6 flex justify-between items-center">
-        <div class="text-2xl font-bold tracking-tighter flex items-center gap-2">
-            <i class="ph-fill ph-cpu text-cyan-400 text-3xl animate-pulse"></i>
-            <span>CREILZOO<span class="text-cyan-400">HARDWARE</span></span>
-        </div>
-        
-        <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
-            <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span class="text-[10px] font-black text-emerald-500 uppercase tracking-tighter">Atelier Ouvert</span>
-        </div>
-
-        <div class="hidden md:flex gap-8 text-sm font-medium text-slate-300 items-center">
-            <a href="#services" class="hover:text-cyan-400 transition-all">Services</a>
-            <a href="#configurateur" class="hover:text-cyan-400 transition-all">Configurateur LAB</a>
-            <a href="configurateur.html" class="hover:text-cyan-400 transition-all">Configurateur 3D</a>
-            <a href="#team" class="hover:text-cyan-400 transition-all">L'Équipe</a>
+    <nav class="fixed w-full z-[100] py-4 glass-nav">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <i class="ph-fill ph-cpu text-cyan-400 text-3xl animate-pulse"></i>
+                <span>CREILZOO<span class="text-cyan-400">HARDWARE</span></span>
+            </div>
             
-            <a href="https://maisonlancloud.freeboxos.fr:49151/" target="_blank" class="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-full hover:border-cyan-400 hover:text-cyan-400 transition-all group">
-                <i class="ph ph-headset text-lg"></i>
-                <span class="font-bold uppercase text-[10px] tracking-widest">Support GLPI</span>
-            </a>
+            <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-[10px] font-black text-emerald-500 uppercase tracking-tighter">Atelier Ouvert</span>
+            </div>
 
-            <a href="#contact" class="px-5 py-2 bg-cyan-500 text-slate-950 rounded-full font-bold hover:bg-white hover:scale-105 transition-all">Contact</a>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-300 items-center">
+                <a href="#services" class="hover:text-cyan-400 transition-all">Services</a>
+                <a href="#configurateur" class="hover:text-cyan-400 transition-all">Configurateur LAB</a>
+                <a href="configurateur.html" class="hover:text-cyan-400 transition-all">Configurateur 3D</a>
+                <a href="#team" class="hover:text-cyan-400 transition-all">L'Équipe</a>
+                
+                <a href="https://maisonlancloud.freeboxos.fr:49151/" target="_blank" class="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-full hover:border-cyan-400 hover:text-cyan-400 transition-all group">
+                    <i class="ph ph-headset text-lg"></i>
+                    <span class="font-bold uppercase text-[10px] tracking-widest">Support GLPI</span>
+                </a>
+
+                <a href="#contact" class="px-5 py-2 bg-cyan-500 text-slate-950 rounded-full font-bold hover:bg-white hover:scale-105 transition-all">Contact</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587202377405-83616591040c?q=80&w=2070')] bg-cover bg-center opacity-5"></div>
@@ -175,49 +170,29 @@
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl font-black mb-20 uppercase tracking-widest" data-aos="fade-up">Team CREILZOOHARDWARE</h2>
             <div class="flex flex-wrap justify-center gap-8">
-<script>
-    const team = [
-        {
-            n: "DUONG Ilian", 
-            r: "Chef de Projet - DSI<br>Dev & Infra Ops / Support & Doc", 
-            img: "ilian.jpg" // <--- Chemin vers ta photo
-        },
-        {
-            n: "AMMI Tayeb", 
-            r: "Support & Doc", 
-            img: "tayeb.jpg"
-        },
-        {
-            n: "ELQMACHE Ouissame", 
-            r: "Marketing & Dev", 
-            img: "ouiss.jpg"
-        },
-        {
-            n: "BEN FARHAT Mohamed", 
-            r: "Digital & Dev Ops", 
-            img: "moha.jpg"
-        },
-        {
-            n: "LANAYA Mehdi", 
-            r: "Infra & Ops", 
-            img: "mehdi.jpg"
-        }
-    ];
+                <script>
+                    const team = [
+                        { n: "DUONG Ilian", r: "Chef de Projet - DSI<br>Dev & Infra Ops / Support & Doc", img: "ilian.jpg" },
+                        { n: "AMMI Tayeb", r: "Support & Doc", img: "tayeb.jpg" },
+                        { n: "ELQMACHE Ouissame", r: "Marketing & Dev", img: "ouiss.jpg" },
+                        { n: "BEN FARHAT Mohamed", r: "Digital & Dev Ops", img: "moha.jpg" },
+                        { n: "LANAYA Mehdi", r: "Infra & Ops", img: "mehdi.jpg" }
+                    ];
 
-    team.forEach((m, i) => {
-        document.write(`
-            <div class="bg-slate-900/50 p-8 rounded-[30px] border border-slate-800 w-64 hover:border-cyan-400/50 transition-all group" data-aos="zoom-in" data-aos-delay="${i*100}">
-                <div class="relative w-24 h-24 mx-auto mb-4">
-                    <img src="${m.img}" 
-                         class="w-full h-full object-cover bg-slate-800 rounded-3xl border-2 border-slate-700 group-hover:border-cyan-400 transition-colors" 
-                         onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${m.n}'">
-                </div>
-                <h3 class="font-black text-lg mb-1">${m.n}</h3>
-                <p class="text-cyan-400 text-[10px] font-black uppercase tracking-widest">${m.r}</p>
-            </div>
-        `);
-    });
-</script>
+                    team.forEach((m, i) => {
+                        document.write(`
+                            <div class="bg-slate-900/50 p-8 rounded-[30px] border border-slate-800 w-64 hover:border-cyan-400/50 transition-all group" data-aos="zoom-in" data-aos-delay="${i*100}">
+                                <div class="relative w-24 h-24 mx-auto mb-4">
+                                    <img src="${m.img}" 
+                                         class="w-full h-full object-cover bg-slate-800 rounded-3xl border-2 border-slate-700 group-hover:border-cyan-400 transition-colors" 
+                                         onerror="this.src='https://api.dicebear.com/7.x/initials/svg?seed=${m.n}'">
+                                </div>
+                                <h3 class="font-black text-lg mb-1">${m.n}</h3>
+                                <p class="text-cyan-400 text-[10px] font-black uppercase tracking-widest">${m.r}</p>
+                            </div>
+                        `);
+                    });
+                </script>
             </div>
         </div>
     </section>
@@ -226,12 +201,12 @@
         <div class="container mx-auto px-6 max-w-4xl">
             <div class="bg-slate-900 p-12 rounded-[40px] border border-slate-800" data-aos="fade-up">
                 <h2 class="text-4xl font-black mb-12 text-center uppercase tracking-widest">Nous Écrire</h2>
-                <form action="https://formspree.io/f/contactdhardware@gmail.com" method="POST" class="grid md:grid-cols-2 gap-6">
-                    <input type="text" name="nom" placeholder="VOTRE NOM" required class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
-                    <input type="email" name="email" placeholder="VOTRE EMAIL" required class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
-                    <textarea name="message" rows="4" placeholder="VOTRE PROJET..." required class="md:col-span-2 w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400"></textarea>
-                    <button type="submit" class="md:col-span-2 py-5 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black rounded-2xl uppercase tracking-widest transition-all hover:scale-105 shadow-lg shadow-cyan-500/20">Envoyer au Support</button>
-                </form>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <input type="text" id="contact-nom" placeholder="VOTRE NOM" class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
+                    <input type="email" id="contact-email" placeholder="VOTRE EMAIL" class="w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400">
+                    <textarea id="contact-message" rows="4" placeholder="VOTRE PROJET..." class="md:col-span-2 w-full bg-slate-950 border border-slate-800 p-4 rounded-2xl outline-none font-bold focus:border-cyan-400"></textarea>
+                    <button onclick="envoyerContact()" class="md:col-span-2 py-5 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black rounded-2xl uppercase tracking-widest transition-all hover:scale-105 shadow-lg shadow-cyan-500/20">Envoyer au Support</button>
+                </div>
             </div>
         </div>
     </section>
@@ -243,7 +218,7 @@
     <script>
         AOS.init({ duration: 800, once: true });
 
-        // LOGIQUE BONUS: Scroll & Cursor Glow
+        // LOGIQUE SCROLL & CURSOR
         window.addEventListener('scroll', () => {
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -259,6 +234,7 @@
 
         // CONFIGURATEUR
         let basePrice = 0; let currentUsage = ""; let currentDesc = "";
+        
         function selectUsage(name, price, desc, el) {
             basePrice = price; currentUsage = name; currentDesc = desc;
             document.querySelectorAll('.usage-btn').forEach(b => {
@@ -301,6 +277,7 @@
             document.getElementById('res-list').innerHTML = list;
         }
 
+        // ENVOI DEVIS
         function envoyerDevis() {
             if(!currentUsage) { alert("Veuillez sélectionner une configuration !"); return; }
             const total = document.getElementById('total-price').innerText;
@@ -312,13 +289,28 @@
             corps += `- Estimation : ${total}\n\nMerci.`;
             window.location.href = `mailto:contactdhardware@gmail.com?subject=${sujet}&body=${encodeURIComponent(corps)}`;
         }
+
+        // ENVOI CONTACT (NOUVEAU)
+        function envoyerContact() {
+            const nom = document.getElementById('contact-nom').value;
+            const email = document.getElementById('contact-email').value;
+            const message = document.getElementById('contact-message').value;
+
+            if(nom === "" || message === "") {
+                alert("Merci de remplir au moins votre nom et votre message.");
+                return;
+            }
+
+            const subject = encodeURIComponent("[SUPPORT] Nouveau message de " + nom);
+            const body = encodeURIComponent(
+                `Nom : ${nom}\n` +
+                `Email : ${email}\n` +
+                `--------------------------------\n` +
+                `MESSAGE :\n${message}`
+            );
+
+            window.location.href = `mailto:contactdhardware@gmail.com?subject=${subject}&body=${body}`;
+        }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
