@@ -2,12 +2,13 @@
 <html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CREILZOOHARDWARE | 3D Configurator</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -25,65 +26,70 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: white; overflow-x: hidden; }
         .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        #canvas-container { width: 100%; height: 500px; cursor: grab; }
+        
+        /* Ajustement Responsive Canvas */
+        #canvas-container { width: 100%; height: 350px; cursor: grab; outline: none; touch-action: none; }
+        @media (min-width: 1024px) { #canvas-container { height: 500px; } }
         #canvas-container:active { cursor: grabbing; }
     </style>
 </head>
 <body>
 
-<nav class="fixed w-full z-[100] py-6 px-10 flex justify-between items-center pointer-events-none">
-    <div class="text-2xl font-black tracking-tighter pointer-events-auto">
+<nav class="fixed w-full z-[100] py-4 lg:py-6 px-6 lg:px-10 flex justify-between items-center pointer-events-none">
+    <div class="text-xl lg:text-2xl font-black tracking-tighter pointer-events-auto">
         <a href="index.html" class="hover:opacity-80 transition-opacity">
             CREILZOO<span class="text-cyan-400">HARDWARE</span>
         </a>
     </div>
-    <div class="glass px-6 py-2 rounded-full text-[10px] font-black tracking-[0.2em] uppercase pointer-events-auto">
-        Moteur de rendu 3D actif
+    <div class="glass px-4 lg:px-6 py-2 rounded-full text-[8px] lg:text-[10px] font-black tracking-[0.2em] uppercase pointer-events-auto">
+        Moteur 3D actif
     </div>
 </nav>
 
-<main class="grid lg:grid-cols-12 min-h-screen">
+<main class="flex flex-col lg:grid lg:grid-cols-12 min-h-screen">
     
-    <div class="lg:col-span-3 p-10 pt-32 space-y-6 z-10 bg-gradient-to-r from-slate-950 to-transparent">
-        <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-10">Sélectionner un Châssis</h2>
+    <div class="order-2 lg:order-1 lg:col-span-3 p-6 lg:p-10 pt-10 lg:pt-32 space-y-4 lg:space-y-6 z-10 bg-gradient-to-b lg:bg-gradient-to-r from-slate-950 to-transparent">
+        <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 lg:mb-10">Sélectionner un Châssis</h2>
         
-        <button onclick="loadModel('gaming')" class="w-full p-6 glass rounded-3xl text-left hover:border-cyan-400 transition-all group">
-            <i class="ph ph-shield-checkered text-2xl text-cyan-400 mb-2"></i>
-            <h4 class="font-black uppercase tracking-tighter">Full Tower Gaming</h4>
-            <p class="text-[10px] text-slate-400 mt-1">E-ATX • Airflow Max • RGB Sync</p>
-        </button>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-6">
+            <button onclick="loadModel('gaming')" class="w-full p-6 glass rounded-3xl text-left hover:border-cyan-400 transition-all group">
+                <i class="ph ph-shield-checkered text-2xl text-cyan-400 mb-2"></i>
+                <h4 class="font-black uppercase tracking-tighter">Full Tower Gaming</h4>
+                <p class="text-[10px] text-slate-400 mt-1">E-ATX • Airflow Max • RGB Sync</p>
+            </button>
 
-        <button onclick="loadModel('workstation')" class="w-full p-6 glass rounded-3xl text-left hover:border-violet-400 transition-all">
-            <i class="ph ph-cube text-2xl text-violet-400 mb-2"></i>
-            <h4 class="font-black uppercase tracking-tighter">Workstation Pro</h4>
-            <p class="text-[10px] text-slate-400 mt-1">Dual GPU Ready • Insonorisé</p>
-        </button>
+            <button onclick="loadModel('workstation')" class="w-full p-6 glass rounded-3xl text-left hover:border-violet-400 transition-all">
+                <i class="ph ph-cube text-2xl text-violet-400 mb-2"></i>
+                <h4 class="font-black uppercase tracking-tighter">Workstation Pro</h4>
+                <p class="text-[10px] text-slate-400 mt-1">Dual GPU Ready • Insonorisé</p>
+            </button>
 
-        <button onclick="loadModel('minimal')" class="w-full p-6 glass rounded-3xl text-left hover:border-emerald-400 transition-all">
-            <i class="ph ph-bounding-box text-2xl text-emerald-400 mb-2"></i>
-            <h4 class="font-black uppercase tracking-tighter">Small Form Factor</h4>
-            <p class="text-[10px] text-slate-400 mt-1">ITX • Ultra Compact • Discret</p>
-        </button>
+            <button onclick="loadModel('minimal')" class="w-full p-6 glass rounded-3xl text-left hover:border-emerald-400 transition-all">
+                <i class="ph ph-bounding-box text-2xl text-emerald-400 mb-2"></i>
+                <h4 class="font-black uppercase tracking-tighter">Small Form Factor</h4>
+                <p class="text-[10px] text-slate-400 mt-1">ITX • Ultra Compact • Discret</p>
+            </button>
+        </div>
     </div>
 
-    <div class="lg:col-span-6 relative flex items-center justify-center">
+    <div class="order-1 lg:order-2 lg:col-span-6 relative flex items-center justify-center pt-20 lg:pt-0">
         <div id="canvas-container"></div>
         
-        <div class="absolute bottom-10 glass p-6 rounded-3xl flex gap-10 text-center">
+        <div class="absolute bottom-4 lg:bottom-10 glass p-4 lg:p-6 rounded-3xl flex gap-6 lg:gap-10 text-center scale-90 lg:scale-100">
             <div>
-                <span class="block text-[10px] font-bold text-slate-500 uppercase italic">Rotation</span>
-                <span class="text-sm font-black">360° AUTO</span>
+                <span class="block text-[8px] lg:text-[10px] font-bold text-slate-500 uppercase italic">Interaction</span>
+                <span class="text-xs lg:text-sm font-black uppercase">SOURIS / TOUCH</span>
             </div>
             <div class="w-[1px] bg-white/10"></div>
             <div>
-                <span class="block text-[10px] font-bold text-slate-500 uppercase italic">Rendu</span>
-                <span class="text-sm font-black text-cyan-400">REAL-TIME</span>
+                <span class="block text-[8px] lg:text-[10px] font-bold text-slate-500 uppercase italic">Rendu</span>
+                <span class="text-xs lg:text-sm font-black text-cyan-400">REAL-TIME</span>
             </div>
         </div>
     </div>
 
-    <div class="lg:col-span-3 p-10 pt-32 z-10 bg-gradient-to-l from-slate-950 to-transparent">
-        <div class="glass h-[600px] rounded-[40px] flex flex-col overflow-hidden border-white/5">
+    <div class="order-3 lg:order-3 lg:col-span-3 p-6 lg:p-10 lg:pt-32 z-10 bg-gradient-to-t lg:bg-gradient-to-l from-slate-950 to-transparent pb-10">
+        <div class="glass h-[450px] lg:h-[600px] rounded-[30px] lg:rounded-[40px] flex flex-col overflow-hidden border-white/5 shadow-2xl">
             <div class="p-6 bg-white/5 flex items-center gap-3">
                 <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                 <span class="text-[10px] font-black uppercase tracking-widest">Assistant Intelligent v1.0</span>
@@ -108,22 +114,34 @@
 </main>
 
 <script>
-    // --- LOGIQUE 3D (Standard) ---
-    let scene, camera, renderer, currentPC;
+    // --- LOGIQUE 3D AVEC CONTRÔLES ---
+    let scene, camera, renderer, currentPC, controls;
     let pointLight, ambientLight;
 
     function init3D() {
         const container = document.getElementById('canvas-container');
         scene = new THREE.Scene();
         camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+        
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         container.appendChild(renderer.domElement);
+
+        // Ajout des contrôles Orbit (Souris + Tactile)
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 2.0;
+        controls.enableZoom = false; // Désactivé pour pas gêner le scroll mobile
+
         ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
         scene.add(ambientLight);
+        
         pointLight = new THREE.PointLight(0x22d3ee, 2, 10);
         pointLight.position.set(2, 2, 2);
         scene.add(pointLight);
+        
         loadModel('gaming');
         camera.position.z = 6;
         animate();
@@ -136,18 +154,21 @@
         const mainMat = new THREE.MeshPhongMaterial({ color: 0x0f172a, transparent: true, opacity: 0.6, shininess: 100 });
         const chassis = new THREE.Mesh(mainGeo, mainMat);
         group.add(chassis);
+        
         const wireframe = new THREE.EdgesGeometry(mainGeo);
         const lineMat = new THREE.LineBasicMaterial({ color: color, linewidth: 2 });
         const edges = new THREE.LineSegments(wireframe, lineMat);
         group.add(edges);
+        
         const compGeo = new THREE.BoxGeometry(width * 0.8, 0.3, depth * 0.7);
         const compMat = new THREE.MeshPhongMaterial({ color: 0x1e293b });
         const gpu = new THREE.Mesh(compGeo, compMat);
         gpu.position.y = -0.2;
         group.add(gpu);
+        
         const internalLight = new THREE.PointLight(glowColor, 3, 3);
-        internalLight.position.set(0, 0, 0);
         group.add(internalLight);
+        
         currentPC = group;
         scene.add(currentPC);
         pointLight.color.setHex(glowColor);
@@ -161,10 +182,7 @@
 
     function animate() {
         requestAnimationFrame(animate);
-        if(currentPC) {
-            currentPC.rotation.y += 0.005;
-            currentPC.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-        }
+        controls.update(); // Important pour les mouvements fluides
         renderer.render(scene, camera);
     }
 
@@ -248,8 +266,8 @@
             ]
         }
     };
-
-    const fallback = `
+  
+        const fallback = `
         <div class="space-y-2">
             <p>Désolé, mes bases de données sont limitées. Essayez de me parler de :</p>
             <div class="flex flex-wrap gap-2">
@@ -266,16 +284,13 @@
         const input = document.getElementById('ai-input');
         const userMsg = input.value.trim();
         const lowMsg = userMsg.toLowerCase();
-        
         if(!userMsg) return;
 
-        // Affichage message utilisateur
         const box = document.getElementById('chat-box');
         box.innerHTML += `<div class="flex justify-end mb-4"><div class="bg-cyan-400 text-slate-950 p-3 rounded-2xl rounded-tr-none text-xs font-bold max-w-[80%]">${userMsg}</div></div>`;
         input.value = "";
         box.scrollTop = box.scrollHeight;
 
-        // Loader
         const loadingId = "load-" + Date.now();
         box.innerHTML += `<div id="${loadingId}" class="flex justify-start mb-4"><div class="bg-slate-800 p-3 rounded-2xl rounded-tl-none text-xs text-slate-400 italic">CREILZOO réfléchit...</div></div>`;
         box.scrollTop = box.scrollHeight;
@@ -283,21 +298,13 @@
         setTimeout(() => {
             document.getElementById(loadingId).remove();
             let finalResponse = "";
-
-            // Parcours de toutes les catégories pour trouver un mot-clé
             for (const category in responses) {
                 if (responses[category].keywords.some(key => lowMsg.includes(key))) {
                     finalResponse = responses[category].lines[Math.floor(Math.random() * responses[category].lines.length)];
-                    
-                    // Optionnel : Changement automatique de modèle 3D selon le sujet
                     if(category === 'gaming_ultra') loadModel('gaming');
-                    if(category === 'travail_pro') loadModel('workstation');
-                    if(category === 'budget_eco') loadModel('minimal');
-                    
                     break;
                 }
             }
-
             if (!finalResponse) finalResponse = fallback;
             addBotMsg(finalResponse);
         }, 700);
@@ -317,6 +324,13 @@
 
     document.getElementById('ai-input').addEventListener('keypress', (e) => { if(e.key === 'Enter') handleAI(); });
     window.onload = init3D;
+
+    window.addEventListener('resize', () => {
+        const container = document.getElementById('canvas-container');
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
 </script>
 </body>
 </html>
