@@ -64,9 +64,15 @@
     <nav class="fixed w-full z-[100] py-4 glass-nav">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <div class="text-2xl font-bold tracking-tighter flex items-center gap-2">
-                <i class="ph-fill ph-cpu text-cyan-400 text-3xl animate-pulse"></i>
-                <span>CREILZOO<span class="text-cyan-400">HARDWARE</span></span>
+                <a href="#" class="text-2xl font-bold tracking-tighter flex items-center gap-2 hover:opacity-80 transition-opacity">
+    <i class="ph-fill ph-cpu text-cyan-400 text-3xl animate-pulse"></i>
+    <span>CREILZOO<span class="text-cyan-400">HARDWARE</span></span>
+</a>
             </div>
+
+            <button class="md:hidden text-white text-3xl" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+    <i class="ph ph-list"></i>
+</button>
             
             <div class="hidden lg:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
                 <span class="relative flex h-2 w-2">
@@ -91,6 +97,17 @@
             </div>
         </div>
     </nav>
+
+    <div id="mobile-menu" class="hidden fixed inset-0 z-[90] bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 text-xl font-bold md:hidden">
+    <button class="absolute top-6 right-6 text-white text-3xl" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+        <i class="ph ph-x"></i>
+    </button>
+    <a href="#services" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Services</a>
+    <a href="#configurateur" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Configurateur LAB</a>
+    <a href="configurateur.html">Configurateur 3D</a>
+    <a href="#team" onclick="document.getElementById('mobile-menu').classList.add('hidden')">L'Équipe</a>
+    <a href="#contact" class="px-8 py-3 bg-cyan-500 text-slate-950 rounded-full" onclick="document.getElementById('mobile-menu').classList.add('hidden')">Contact</a>
+</div>
 
     <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1587202377405-83616591040c?q=80&w=2070')] bg-cover bg-center opacity-5"></div>
